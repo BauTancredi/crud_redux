@@ -7,7 +7,7 @@ export function createNewProductAction(product) {
 
     try {
       // Insert in API
-      await clientAxios.post("/produts", product);
+      await clientAxios.post("/produsts", product);
 
       // Update state success
       disptach(addProductSuccess(product));

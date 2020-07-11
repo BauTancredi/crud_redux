@@ -34,6 +34,11 @@
       "name": "Rib Eye 2kg",
       "price": 900,
       "id": 7
+    },
+    {
+      "name": "Rib Eye 1kg",
+      "price": 40,
+      "id": 8
     }
   ]
 }
