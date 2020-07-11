@@ -1,12 +1,18 @@
 import { ADD_PRODUCT, ADD_PRODUCT_SUCCESS, ADD_PRODUCT_ERROR } from "../types";
+import clientAxios from "../config/axios";
 
 export function createNewProductAction(product) {
-  return (disptach) => {
+  return async (disptach) => {
     disptach(addProduct());
 
     try {
+      // Insert in API
+      await clientAxios.post("/produts", product);
+
+      // Update state success
       disptach(addProductSuccess(product));
     } catch (error) {
+      console.log(error);
       disptach(addProductError(true));
     }
   };
@@ -14,7 +20,7 @@ export function createNewProductAction(product) {
 
 const addProduct = () => ({
   type: ADD_PRODUCT,
-  paylaod: true,
+  payload: true,
 });
 
 const addProductSuccess = (product) => ({
