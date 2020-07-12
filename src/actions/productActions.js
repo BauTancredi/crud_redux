@@ -10,6 +10,10 @@ import {
   PRODUCT_DELETE_GET,
   PRODUCT_DELETE_SUCCESS,
   PRODUCT_DELETE_ERROR,
+  PRODUCT_EDIT_GET,
+  PRODUCT_EDIT_START,
+  PRODUCT_EDIT_SUCCESS,
+  PRODUCT_EDIT_ERROR,
 } from "../types";
 
 import clientAxios from "../config/axios";
@@ -111,5 +115,43 @@ const deleteProductSuccess = () => ({
 });
 const deleteProductError = () => ({
   type: PRODUCT_DELETE_ERROR,
+  payload: true,
+});
+
+export function obtainProductEdit(product) {
+  return (disptach) => {
+    disptach(obtainProductAction(product));
+  };
+}
+
+const obtainProductAction = (product) => ({
+  type: PRODUCT_EDIT_GET,
+  payload: product,
+});
+
+export function editProductAction(product) {
+  return async (disptach) => {
+    disptach(editProduct());
+
+    try {
+      await clientAxios.put(`/products/${product.id}`, product);
+
+      disptach(editProductSuccess(product));
+    } catch (error) {
+      disptach(editProductError());
+    }
+  };
+}
+const editProduct = () => ({
+  type: PRODUCT_EDIT_START,
+});
+
+const editProductSuccess = (product) => ({
+  type: PRODUCT_EDIT_SUCCESS,
+  payload: product,
+});
+
+const editProductError = () => ({
+  type: PRODUCT_EDIT_ERROR,
   payload: true,
 });
