@@ -1,4 +1,11 @@
-import { ADD_PRODUCT, ADD_PRODUCT_SUCCESS, ADD_PRODUCT_ERROR } from "../types";
+import {
+  ADD_PRODUCT,
+  ADD_PRODUCT_SUCCESS,
+  ADD_PRODUCT_ERROR,
+  DOWNLOAD_PRODUCTS_START,
+  DOWNLOAD_PRODUCTS_SUCCESS,
+  DOWNLOAD_PRODUCTS_ERROR,
+} from "../types";
 
 const initialState = {
   products: [],
@@ -8,8 +15,8 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case DOWNLOAD_PRODUCTS_START:
     case ADD_PRODUCT:
-      console.log(action.payload)
       return {
         ...state,
         loading: action.payload,
@@ -20,11 +27,19 @@ export default function (state = initialState, action) {
         loading: false,
         products: [...state.products, action.payload],
       };
+    case DOWNLOAD_PRODUCTS_ERROR:
     case ADD_PRODUCT_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload,
+      };
+    case DOWNLOAD_PRODUCTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        products: action.payload,
       };
     default:
       return state;
