@@ -7,6 +7,9 @@ import {
   DOWNLOAD_PRODUCTS_START,
   DOWNLOAD_PRODUCTS_SUCCESS,
   DOWNLOAD_PRODUCTS_ERROR,
+  PRODUCT_DELETE_GET,
+  PRODUCT_DELETE_SUCCESS,
+  PRODUCT_DELETE_ERROR,
 } from "../types";
 
 import clientAxios from "../config/axios";
@@ -79,5 +82,32 @@ const downloadProductsSuccess = (products) => ({
 
 const downloadProductsError = () => ({
   type: DOWNLOAD_PRODUCTS_ERROR,
+  payload: true,
+});
+
+export function deleteProductAction(id) {
+  return async (disptach) => {
+    disptach(getProductDelete(id));
+
+    try {
+      const response = await clientAxios.delete(`/products/${id}`);
+
+      disptach(deleteProductSuccess());
+    } catch (error) {
+      disptach(deleteProductError());
+    }
+  };
+}
+
+const getProductDelete = (id) => ({
+  type: PRODUCT_DELETE_GET,
+  payload: id,
+});
+
+const deleteProductSuccess = () => ({
+  type: PRODUCT_DELETE_SUCCESS,
+});
+const deleteProductError = () => ({
+  type: PRODUCT_DELETE_ERROR,
   payload: true,
 });
