@@ -94,7 +94,7 @@ export function deleteProductAction(id) {
     disptach(getProductDelete(id));
 
     try {
-      const response = await clientAxios.delete(`/products/${id}`);
+      await clientAxios.delete(`/products/${id}`);
 
       disptach(deleteProductSuccess());
 

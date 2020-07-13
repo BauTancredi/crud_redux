@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { createNewProductAction } from "../actions/productActions";
+import { showAlert } from "../actions/alertActions";
 
 const NewProduct = ({ history }) => {
   const [name, setName] = useState("");
@@ -18,7 +19,16 @@ const NewProduct = ({ history }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (name.trim() === "" || price <= 0) return;
+    if (name.trim() === "" || price <= 0) {
+      const alert = {
+        msg: "Both fields are mandatory",
+        classes: "alert alert-danger text-center text-uppercase p3",
+      };
+
+      dispatch(showAlert(alert));
+
+      return;
+    }
 
     addProduct({
       name,
