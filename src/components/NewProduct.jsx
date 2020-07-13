@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { createNewProductAction } from "../actions/productActions";
-import { showAlert } from "../actions/alertActions";
+import { showAlert, hideAlertAction } from "../actions/alertActions";
 
 const NewProduct = ({ history }) => {
   const [name, setName] = useState("");
@@ -13,6 +13,7 @@ const NewProduct = ({ history }) => {
   // Access state of the store
   const loading = useSelector((state) => state.products.loading);
   const error = useSelector((state) => state.products.error);
+  const alert = useSelector((state) => state.alert.alert);
 
   const addProduct = (product) => dispatch(createNewProductAction(product));
 
@@ -30,6 +31,8 @@ const NewProduct = ({ history }) => {
       return;
     }
 
+    dispatch(hideAlertAction());
+
     addProduct({
       name,
       price,
@@ -46,7 +49,7 @@ const NewProduct = ({ history }) => {
             <h2 className="text-center mb-4 font-weight-bold">
               Add new product
             </h2>
-
+            {alert ? <p className={alert.classes}>{alert.msg}</p> : null}
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label>Product Name</label>
